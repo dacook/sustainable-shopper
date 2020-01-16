@@ -10,6 +10,10 @@ const c = new Crawler({
         } else {
             const $ = res.$;
             console.log($("title").text());
+            const types = $('.p-3');
+            const recyclingAccepted = Array.from($(types[0]).find('.kerbside-accepted p')).map((val)=>$(val).text());
+            console.log($('.row.text-center p').first().text().split('|')[0], " accepted:");
+            console.log(recyclingAccepted);
         }
         done();
     }
