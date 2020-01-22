@@ -8,10 +8,12 @@ const c = new Crawler({
         if (error){
             console.log(error);
         } else {
+            // Get accepted kerbside recycling.
             const $ = res.$;
             console.log($("title").text());
             const types = $('.p-3');
             const recyclingAccepted = Array.from($(types[0]).find('.kerbside-accepted p')).map((val)=>$(val).text());
+            console.log($('h2').text());
             console.log($('.row.text-center p').first().text().split('|')[0], " accepted:");
             console.log(recyclingAccepted);
         }
@@ -25,8 +27,10 @@ function crawlRecyclingNearYou(){
 }
 
 function getCouncilUrls(baseUrl){
+    const uri = baseUrl+'/councils/';
+    console.log('Crawling ' + uri + '...');
     c.queue([{
-        uri: baseUrl+'/councils/',
+        uri: uri,
         callback: (error, res, done) => {
             if (error){
                 console.log(error);
@@ -37,7 +41,8 @@ function getCouncilUrls(baseUrl){
                     return baseUrl + '/kerbside/' + $(val).attr('href').split('/')[2];
                 });
 
-                getCouncilKerbsides(councilUrls);
+                getCouncilKerbsides("https://recyclingnearyou.com.au/kerbside/MorelandVIC");
+                // getCouncilKerbsides(councilUrls);
             }
             done();
         }
